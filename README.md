@@ -1,3 +1,6 @@
+# M8-Backend-NoSQL-Gestion-Publicaciones-Comentarios
+
+API con nodejs, expres.js, mongoose.
 API de Gestión de Publicaciones y Comentarios con Referencias entre Colecciones
 
 Desarrolla una API que permita a los usuarios crear publicaciones y agregar comentarios a esas publicaciones. La API debe cumplir con los siguientes requisitos:
