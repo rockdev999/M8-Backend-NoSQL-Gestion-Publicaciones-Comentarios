@@ -1,2 +1,2 @@
-# M8-Backend-NoSQL-Sistema-de-Cine
+# M8-Backend-NoSQL-Gestion-Publicaciones-Comentarios
 API con nodejs, expres.js, mongoose.
