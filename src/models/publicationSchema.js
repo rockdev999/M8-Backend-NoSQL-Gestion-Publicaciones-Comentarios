@@ -16,11 +16,12 @@ const publicationSchema = new Schema(
       ref: "Users",
       required: true,
     },
-    comment: {
-      type: Schema.Types.ObjectId,
-      ref: "Comments",
-      required: false,
-    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comments",
+      },
+    ],
   },
   {
     versionKey: false,
@@ -46,7 +47,10 @@ publicationSchema.pre("save", async function (next) {
 publicationSchema.methods.populateReferences = async function () {
   try {
     const result = await this.populate("user")
-      .populate("comment")
+      .populate({
+        path: "comments", // Popula los comentarios
+        populate: { path: "user", model: "Users" }, // Dentro de los comentarios, popular el usuario que los creó
+      })
       .exectPopulate();
     return result;
   } catch (err) {
