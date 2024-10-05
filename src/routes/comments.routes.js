@@ -7,9 +7,9 @@ import {
 export const commentRouter = Router();
 
 // todos los comentarios
-commentRouter.get("/posts/:postId/comments", getComments);
+commentRouter.get("/posts/comments", getComments);
 // crea un comentario en una publicacion
-commentRouter.post("/posts/:postId/comments", createComment);
+commentRouter.post("/posts/comments", createComment);
 // BORRA EL COMENTARIO, VALIDANDO ANTES, PARA SABER QUE ES EL USUARIO QUE COMENTÓ Y NO EL USUARIO QUE PUBLICÓ, COMO LO HARÍA
 // commentRouter.delete(
 //   "/posts/:postId/comments/:commentID",
