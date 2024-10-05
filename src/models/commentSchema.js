@@ -11,13 +11,6 @@ const commentSchema = new Schema(
       ref: "Users",
       required: true,
     },
-    // CREO QUE ESTO YA NO ES REQUERIDO YA QUE EL COMENTARIO SE MOSTRARA EN LA PUBLICACION O IGUAL DEBERIA ESTAR AQUI???
-    publication: {
-      type: Schema.Types.ObjectId,
-      //   lo mismo???
-      ref: "Publications",
-      required: true,
-    },
   },
   {
     versionKey: false,
@@ -35,19 +28,14 @@ commentSchema.pre("save", async function () {
 });
 commentSchema.methods.populateReferences = async function () {
   try {
-    const result = await this.populate("user")
-      .populate("publication")
-      .exectPopulate();
+    const result = await this.populate("user").exectPopulate();
     return result;
   } catch (err) {
     console.log(err);
   }
 };
-// DEPENDE DE ARRIBA SI ES NECESARIO PONER LA PUBLICACION AQUI, SE DESCOMENTARAN ESTOS MIDDELWARES
-// PARA PUBLICATION
 commentSchema.pre("save", async function () {
   try {
-    // aqui user o users????
     const result = await model("Publications").findById(this.publication);
     this.publication = result;
   } catch (error) {

@@ -12,15 +12,20 @@ export const getComments = async (req, res) => {
   }
 };
 // crea un comentario en una publicacion
-// CUANDO CREA UN COMENTARIO LO CREA PARA TODOS LAS PUBLICACIONES Y NO HACI PARA UNA PUBLICACION EN ESPECIIFICO
 export const createComment = async (req, res) => {
   try {
+    const { postId } = req.params;
+    if (comm.user.toString() !== req.User) {
+      return res
+        .status(403)
+        .send("No autorizado para comentar esta publicación");
+    }
     const com = Comment(req.body);
     await com.save();
     await Publication.findByIdAndUpdate(
-      req.body.publication, // ID de la publicación
-      { $push: { comments: com._id } }, // Agregar el comentario al array
-      { new: true } // Devuelve la publicación actualizada
+      postId, // ID de la publicación
+      { $push: { comments: com._id } } // Agregar el comentario al array
+      // { new: true } // Devuelve la publicación actualizada
     );
     res.status(201).sendStatus(201);
   } catch (error) {
@@ -28,12 +33,70 @@ export const createComment = async (req, res) => {
     console.log(error);
   }
 };
+export const updateComment = async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
 
-// borra el comentario,validando antes que sea el usuario que comento
-// export const updateComment = async (req, res) => {
-//   try {
-//     // aqui nose como lo puedo hacer
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    const post = await Publication.findById(postId);
+    // .populate("comments");
+
+    if (!post) {
+      return res.status(404).send("Publicación no encontrada");
+    }
+    const comm = await Comment.findById(commentId);
+    const comme = Comment(req.body);
+
+    // verifica si es el usuario que pidio el actualizar
+    if (comm.user.toString() !== req.User) {
+      return res
+        .status(403)
+        .send("No autorizado para eliminar esta publicación");
+    }
+
+    const result = await Comment.findByIdAndUpdate(commentId, comme);
+    if (result) {
+      if (comme.contentComment !== undefined) {
+        res.status(200).send("Comentario Actualizado");
+      } else {
+        res.status(500).send("completa el campo");
+      }
+    } else {
+      res.status(404).send("Comentario no encontrada");
+    }
+
+    res.status(200).send("Comentario eliminado");
+  } catch (error) {
+    res.status(500).sendStatus(500);
+    console.log(error);
+  }
+};
+
+export const deleteComment = async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
+
+    const post = await Publication.findById(postId);
+    // .populate("comments");
+
+    if (!post) {
+      return res.status(404).send("Publicación no encontrada");
+    }
+    const comm = await Comment.findById(commentId);
+
+    if (!comm) {
+      return res.status(404).send("Comentario no encontrado");
+    }
+    // verifica si es el usuario que pidio el actualizar
+    if (comm.user.toString() !== req.User) {
+      return res
+        .status(403)
+        .send("No autorizado para eliminar esta publicación");
+    }
+    await Comment.findByIdAndDelete(commentId);
+
+    res.status(200).send("Comentario eliminado");
+  } catch (error) {
+    res.status(500).sendStatus(500);
+    console.log(error);
+  }
+};

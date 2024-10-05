@@ -14,6 +14,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      immutable: true,
     },
     password: {
       type: String,
@@ -31,12 +32,9 @@ const userSchema = new Schema(
 // aqui hago los middelwares
 // encriptacion de la contrasena
 userSchema.pre("save", async function (next) {
-  // siempre pasa la primera vez???
-  //   siiii
   if (this.isModified("password")) {
     try {
       const passwordHash = await bcrypt.hash(this.password, 8);
-
       this.password = passwordHash;
       next();
     } catch (error) {

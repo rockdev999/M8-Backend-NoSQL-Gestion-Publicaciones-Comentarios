@@ -15,6 +15,7 @@ const publicationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Users",
       required: true,
+      immutable: true,
     },
     comments: [
       {
@@ -49,7 +50,7 @@ publicationSchema.methods.populateReferences = async function () {
     const result = await this.populate("user")
       .populate({
         path: "comments", // Popula los comentarios
-        populate: { path: "user", model: "Users" }, // Dentro de los comentarios, popular el usuario que los creó
+        populate: { path: "user", model: "Users" }, // Dentro de los comentarios, popular el usuario que los creo
       })
       .exectPopulate();
     return result;

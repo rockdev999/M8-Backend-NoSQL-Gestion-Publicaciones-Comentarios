@@ -12,6 +12,11 @@ export const authentiation = (req, res, next) => {
       res.status(401).json({ messge: "No autorizado" });
     }
   } catch (error) {
-    console.log(error);
+    if (error.name === "TokenExpiredError") {
+      res.status(401).json({ message: "Token ha expirado" });
+    } else {
+      res.status(403).json({ message: "Token inválido" });
+      console.log(error);
+    }
   }
 };
