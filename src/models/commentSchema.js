@@ -12,12 +12,12 @@ const commentSchema = new Schema(
       required: true,
     },
     // CREO QUE ESTO YA NO ES REQUERIDO YA QUE EL COMENTARIO SE MOSTRARA EN LA PUBLICACION O IGUAL DEBERIA ESTAR AQUI???
-    // publication: {
-    //   type: Schema.Types.ObjectId,
-    //   //   lo mismo???
-    //   ref: "publications",
-    //   required: true,
-    // },
+    publication: {
+      type: Schema.Types.ObjectId,
+      //   lo mismo???
+      ref: "Publications",
+      required: true,
+    },
   },
   {
     versionKey: false,
@@ -35,7 +35,9 @@ commentSchema.pre("save", async function () {
 });
 commentSchema.methods.populateReferences = async function () {
   try {
-    const result = await this.populate("user").exectPopulate();
+    const result = await this.populate("user")
+      .populate("publication")
+      .exectPopulate();
     return result;
   } catch (err) {
     console.log(err);
@@ -43,22 +45,15 @@ commentSchema.methods.populateReferences = async function () {
 };
 // DEPENDE DE ARRIBA SI ES NECESARIO PONER LA PUBLICACION AQUI, SE DESCOMENTARAN ESTOS MIDDELWARES
 // PARA PUBLICATION
-// commentSchema.pre("save", async function () {
-//   try {
-//     // aqui user o users????
-//     const result = await model("publications").findById(this.publication);
-//     this.publication = result;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-// commentSchema.methods.PubliReferences = async function () {
-//   try {
-//     await this.populate(this.publication).exectPopulate();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+commentSchema.pre("save", async function () {
+  try {
+    // aqui user o users????
+    const result = await model("Publications").findById(this.publication);
+    this.publication = result;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const Comment = model("Comments", commentSchema);
 
