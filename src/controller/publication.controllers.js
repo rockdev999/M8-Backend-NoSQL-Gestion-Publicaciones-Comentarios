@@ -4,7 +4,10 @@ export const getPublications = async (req, res) => {
   try {
     const publications = await Publication.find()
       .populate("user")
-      .populate("comment");
+      .populate({
+        path: "comments", // Popula los comentarios
+        populate: { path: "user", model: "Users" }, // Dentro de los comentarios, popular el usuario que los creó
+      });
     res.status(200).json(publications);
   } catch (error) {
     console.log(error);
