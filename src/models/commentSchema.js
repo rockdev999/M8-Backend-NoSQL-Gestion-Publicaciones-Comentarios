@@ -34,6 +34,7 @@ commentSchema.methods.populateReferences = async function () {
     console.log(err);
   }
 };
+// actualizado
 commentSchema.pre("save", async function () {
   try {
     const result = await model("Publications").findById(this.publication);

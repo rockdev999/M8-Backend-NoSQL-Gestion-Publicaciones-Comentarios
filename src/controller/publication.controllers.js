@@ -35,7 +35,7 @@ export const getPublication = async (req, res) => {
     console.log(error);
   }
 };
-
+// actualizado
 export const updatePublication = async (req, res) => {
   try {
     const { id } = req.params;
