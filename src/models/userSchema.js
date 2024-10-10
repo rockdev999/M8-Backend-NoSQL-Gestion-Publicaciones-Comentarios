@@ -56,5 +56,5 @@ userSchema.methods.verificaPassword = async function (pass) {
   }
 };
 const User = model("Users", userSchema);
-// actualizado
+
 export default User;

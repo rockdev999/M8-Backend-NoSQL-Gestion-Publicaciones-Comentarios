@@ -91,7 +91,7 @@ export const updateUser = async (req, res) => {
     console.log(error);
   }
 };
-// actualizado
+
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,7 +1,7 @@
 import Comment from "../models/commentSchema.js";
 import Publication from "../models/publicationSchema.js";
 // todos los comentarios, de una publicacion. PERO NOSE COMO DIRIGIRLO AL COMENTARIO,
-// actualizado
+
 export const getComments = async (req, res) => {
   try {
     const comments = await Comment.find().populate("user");

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-// actualizado
+
 export const authentiation = (req, res, next) => {
   try {
     const bearerToken = req.headers.authorization;

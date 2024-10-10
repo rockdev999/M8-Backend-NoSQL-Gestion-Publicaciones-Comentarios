@@ -58,7 +58,7 @@ publicationSchema.methods.populateReferences = async function () {
     console.log(err);
   }
 };
-// actualizado
+
 const Publication = model("Publications", publicationSchema);
 
 export default Publication;

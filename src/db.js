@@ -13,4 +13,3 @@ const conexion = (async () => {
 })();
 
 export default conexion;
-// actualizado

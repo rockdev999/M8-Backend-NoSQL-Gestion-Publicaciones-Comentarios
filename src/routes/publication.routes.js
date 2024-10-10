@@ -15,4 +15,3 @@ publicationRouter.post("/posts", authentiation, createPublication);
 publicationRouter.get("/posts/:id", getPublication);
 publicationRouter.put("/posts/:id", authentiation, updatePublication);
 publicationRouter.delete("/posts/:id", authentiation, deletePublication);
-// actualizado
