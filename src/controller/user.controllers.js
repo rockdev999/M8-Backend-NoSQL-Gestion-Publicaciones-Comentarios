@@ -32,8 +32,8 @@ export const getToken = async (req, res) => {
       const compare = await perfil.verificaPassword(password);
       if (compare) {
         // cuantos minutos es lo recomendable dar???
-        const token = jwt.sign({ perfilId: perfil._id }, "mifirma", {
-          expiresIn: "2m",
+        const token = jwt.sign({ perfilId: perfil._id }, process.env.FIRMA, {
+          expiresIn: `${process.env.TIME}`,
         });
         res.json(token);
       } else {

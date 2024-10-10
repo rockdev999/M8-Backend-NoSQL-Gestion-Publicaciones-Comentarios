@@ -5,7 +5,7 @@ export const authentiation = (req, res, next) => {
     const bearerToken = req.headers.authorization;
     if (bearerToken) {
       const token = bearerToken.split(" ")[1];
-      const decoded = jwt.verify(token, "mifirma");
+      const decoded = jwt.verify(token, process.env.FIRMA);
       req.User = decoded.perfilId;
       next();
     } else {

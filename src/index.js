@@ -5,8 +5,7 @@ import { publicationRouter } from "./routes/publication.routes.js";
 import { commentRouter } from "./routes/comments.routes.js";
 const app = express();
 
-const PORT = 4000;
-// const PORT = process.env.PORT || process.env.DB_PORT;
+const PORT = process.env.PORT || process.env.DB_PORT;
 app.use(express.urlencoded({ extended: false }));
 // usuarios
 app.use(userRouter);
