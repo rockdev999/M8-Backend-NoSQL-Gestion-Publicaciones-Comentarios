@@ -10,3 +10,11 @@ Gestión de comentarios: Los usuarios autenticados pueden agregar comentarios a 
 Referencias entre colecciones: Las publicaciones deben tener una referencia al usuario que las creó y los comentarios deben tener referencias tanto a la publicación como al usuario que los escribió.
 Protección de rutas: Las rutas para crear publicaciones, agregar comentarios y editar/eliminar publicaciones deben estar protegidas por autenticación JWT.
 Validación y manejo de errores: La API debe manejar errores como intentar agregar un comentario a una publicación que no existe o intentar eliminar una publicación sin ser el autor.
+Solución Propuesta:
+
+Modelo de Usuario: Igual que en el ejercicio anterior, se utilizará un esquema de Usuario que manejará la autenticación y la asociación con las publicaciones y comentarios.
+Modelo de Publicación: Este esquema de Publicación incluirá un título, el contenido de la publicación y una referencia al usuario que la creó.
+Modelo de Comentario: Este esquema de Comentario incluirá el contenido del comentario, una referencia al usuario que lo creó y una referencia a la publicación a la que pertenece.
+Controladores: Se encargan de la lógica de las publicaciones y comentarios. Se podrán crear, editar y eliminar publicaciones solo si el usuario autenticado es el creador. Los comentarios podrán añadirse a publicaciones específicas, y cada comentario deberá referenciar tanto al usuario que lo creó como a la publicación.
+Middlewares de autenticación y autorización: Igual que en el ejercicio anterior, un middleware autenticará al usuario usando JWT. También habrá un middleware de autorización que verifique si el usuario tiene permiso para editar o eliminar una publicación/comentario.
+Validación y manejo de errores: Se debe validar que los campos requeridos estén completos (por ejemplo, título y contenido en una publicación) y que los usuarios no puedan interactuar con recursos a los que no tienen acceso.
